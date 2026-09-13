@@ -149,7 +149,19 @@
   .cta{ margin-top:36px; padding:22px; background:var(--bg-alt); border:1px solid var(--line); }
   .cta p{ margin:0 0 14px; max-width:56ch; }
   .cta .hint{ margin:10px 0 0; font-size:12.5px; color:var(--muted); }
+  .cta .hint a{ color:var(--ink-secondary); }
   .cta-actions{ display:flex; flex-wrap:wrap; gap:12px; }
+
+  .ml-embed-row{ display:flex; flex-wrap:wrap; gap:10px; margin:0; }
+  .ml-email-input{
+    flex:1 1 220px; min-width:0;
+    font-family:"IBM Plex Sans", sans-serif; font-size:14px; color:var(--ink);
+    background:var(--bg); border:1px solid var(--line-strong); border-radius:3px;
+    padding:13px 14px;
+  }
+  .ml-email-input::placeholder{ color:var(--muted); }
+  .ml-email-input:focus-visible{ outline:2px solid var(--focus); outline-offset:2px; }
+  .ml-success-msg{ margin:0; font-family:"IBM Plex Sans", sans-serif; font-size:14px; color:var(--ink); }
   .retake{ margin-top:20px; }
   .retake button{ background:none; border:none; padding:0; font-family:"IBM Plex Sans", sans-serif; font-size:13px; color:var(--muted); text-decoration:underline; cursor:pointer; }
 
@@ -207,13 +219,30 @@
       <div class="steps" id="result-steps"></div>
 
       <div class="cta">
-        <p>Este retrato não substitui a leitura das apólices — é o ponto de partida para essa conversa. Se fizer sentido, envie-me o resultado e leio o que já tem antes de falarmos de propostas.</p>
-        <div class="cta-actions">
-          <a class="btn" id="send-link" href="mailto:geral@sandramonteiroseguros.pt?subject=O%20Seu%20Crit%C3%A9rio">Enviar o meu resultado por email</a>
-          <a class="btn btn-ghost" id="book-link" href="mailto:geral@sandramonteiroseguros.pt?subject=Marcar%2015%20minutos" target="_blank" rel="noopener">Marcar 15 minutos</a>
+        <p>Este retrato não substitui a leitura das apólices — é o ponto de partida para essa conversa. Deixe o seu email e envio o resultado e os próximos passos.</p>
+
+        <div id="mlb2-45868114" class="ml-form-embedContainer ml-subscribe-form-45868114">
+          <form class="ml-embed-row row-form" action="https://assets.mailerlite.com/jsonp/2599858/forms/198450604422464934/subscribe" data-code="" method="post" target="_blank">
+            <input class="ml-email-input" aria-label="email" aria-required="true" type="email" name="fields[email]" placeholder="o-seu@email.pt" autocomplete="email" required>
+            <button type="submit" class="btn">Enviar o meu resultado</button>
+            <input type="hidden" name="ml-submit" value="1">
+            <input type="hidden" name="anticsrf" value="true">
+          </form>
+          <p class="ml-success-msg row-success" style="display:none">Obrigado! Fique atento à caixa de entrada — o resultado chega já a seguir.</p>
         </div>
-        <p class="hint" id="book-hint">Ligação temporária por email &mdash; troca-se pelo link de marcação assim que houver um.</p>
+
+        <p class="hint" style="margin-top:18px">Prefere falar diretamente? <a href="mailto:geral@sandramonteiroseguros.pt?subject=Marcar%2015%20minutos" target="_blank" rel="noopener">Marcar 15 minutos por email</a>.</p>
       </div>
+
+      <script>
+        function ml_webform_success_45868114(){
+          var $ = window.ml_jQuery || window.jQuery;
+          if (!$) return;
+          $('.ml-subscribe-form-45868114 .row-success').show();
+          $('.ml-subscribe-form-45868114 .row-form').hide();
+        }
+      </script>
+      <script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519" type="text/javascript"></script>
 
       <p class="retake"><button type="button" id="retake-btn">Refazer o teste</button></p>
     </section>
@@ -223,7 +252,7 @@
   <footer>
     <p class="fline"><strong>Sandra Monteiro Mediação de Seguros, Lda.</strong> · Mediadora registada na ASF n.º 414407804</p>
     <p class="fline">938 669 927 · geral@sandramonteiroseguros.pt · sandramonteiroseguros.pt</p>
-    <p class="fline disclaimer">As respostas ficam apenas neste ecrã &mdash; nada é registado nem enviado sem que decida enviar. Este teste é um autodiagnóstico e não substitui a leitura das apólices em vigor nem constitui uma proposta de seguro.</p>
+    <p class="fline disclaimer">As respostas ao teste ficam apenas neste ecrã. Se optar por receber o resultado por email, guardamos apenas o seu endereço para esse fim. Este teste é um autodiagnóstico e não substitui a leitura das apólices em vigor nem constitui uma proposta de seguro.</p>
   </footer>
 
 </div>
@@ -388,12 +417,6 @@
       row.querySelector(".step-desc").textContent = s[1];
       stepsWrap.appendChild(row);
     });
-
-    var body = "Este é o resultado do teste \"O Seu Critério\".\n\n";
-    body += "PERFIL: " + p.title + "\n\n" + p.desc + "\n\nPróximos passos sugeridos:\n";
-    p.steps.forEach(function(s, idx){ body += (idx+1) + ". " + s[0] + "\n"; });
-    var link = document.getElementById("send-link");
-    link.href = "mailto:geral@sandramonteiroseguros.pt?subject=" + encodeURIComponent("O Seu Critério — resultado: " + p.title) + "&body=" + encodeURIComponent(body);
 
     progressTrack.hidden = true;
     screenIntro.hidden = true;
